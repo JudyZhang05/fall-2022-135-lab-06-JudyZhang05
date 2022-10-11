@@ -5,6 +5,8 @@
 
 // add functions here
 
+/*
+
 //TASK A
 
 std::string testascii(std::string input){
@@ -129,3 +131,162 @@ std::string decryption(std::string plain, std::string key, int shift){
     
     return plain;
 }
+
+
+
+//ONLINE GDB TESTS
+
+
+#include <iostream>
+#include <cctype>
+
+
+char unshift(char c, int rshift){
+    if (isupper(c)){
+        c -= rshift;
+        while (ispunct(c) || islower(c)){
+            c+=26;
+        }
+    }
+    else if (islower(c)){
+        c -= rshift;
+        while (c > 122 || c < 97){
+            c+=26;
+        }
+    }
+    return c; 
+}
+
+std::string decipher(std::string plaintext, int rshift){
+    std::string result;
+    for (int i = 0; i < plaintext.length(); i++){
+        result += unshift(plaintext[i], rshift); 
+    }
+    return result;
+}
+
+int main()
+{
+    
+    std::cout << decipher("Rovvy, Gybvn!", 10) << std::endl;
+    std::cout << decipher("Hello World!", -1) << std::endl;
+
+    return 0;
+}
+
+
+//-----------------------------------------------------------------------------------
+
+#include <iostream>
+#include <cctype>
+
+char shiftChar(char c, int rshift){
+    if (isupper(c)){
+        c += rshift;
+        while (ispunct(c) || islower(c)){
+            c-=26;
+        }
+    }
+    else if (islower(c)){
+        c += rshift;
+        while (c > 122 || c < 97){
+            c-=26;
+        }
+    }
+    return c; 
+}
+
+int key(char word){
+    int result = 97;
+    result -= word;
+    return result;
+}
+
+char encryptOnce(char text, int times){
+    times = 0 - times;
+    text = shiftChar(text, times);
+    return text;
+}
+
+std::string encryptVigenere(std::string plaintext, std::string keyword){
+    int cnt=0; std::string result;
+    for (int i = 0; i < plaintext.length(); i++){
+        if (isalpha(plaintext[i])){
+            keyword+=keyword;
+            result += encryptOnce(plaintext[i], key(keyword[i-cnt]));
+        }
+        else{
+            result += plaintext[i];
+            cnt+=1;
+        }
+    }
+    result += "\n";
+    return result;
+}
+
+int main()
+{
+    std::cout << encryptVigenere("Hello, World!", "cake") << std::endl; //Jevpq, Wyvnd!
+    std::cout << encryptVigenere("Why hello there!", "hi") << std::endl;
+
+    return 0;
+}
+
+//--------------------------------------------------------------------------------------------
+
+#include <iostream>
+#include <cctype>
+
+char unshift(char c, int rshift){
+    if (isupper(c)){
+        c -= rshift;
+        while (ispunct(c) || islower(c)){
+            c+=26;
+        }
+    }
+    else if (islower(c)){
+        c -= rshift;
+        while (c > 122 || c < 97){
+            c+=26;
+        }
+    }
+    return c; 
+}
+
+int key(char word){
+    int result = 97;
+    result -= word;
+    return result;
+}
+
+char decryptOnce(char text, int times){
+    times = 0 - times;
+    text = unshift(text, times);
+    return text;
+}
+
+std::string decryptVigenere(std::string plaintext, std::string keyword){
+    int cnt=0; std::string result;
+    for (int i = 0; i < plaintext.length(); i++){
+        if (isalpha(plaintext[i])){
+            keyword+=keyword;
+            result += decryptOnce(plaintext[i], key(keyword[i-cnt]));
+        }
+        else{
+            result += plaintext[i];
+            cnt+=1;
+        }
+    }
+    return result;
+}
+
+int main()
+{
+    std::cout<< decryptVigenere("Jevpq, Wyvnd!", "cake") << std::endl;
+    std::cout<< decryptVigenere("aiww al aspb", "hello") << std::endl;
+    std::cout<< decryptVigenere("This is a sentence.", "unless") << std::endl;
+
+    return 0;
+}
+
+*/
